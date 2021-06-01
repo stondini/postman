@@ -1,0 +1,32 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: common-api
+servers:
+  - url: 'http://localhost:3000'
+paths: {}
+components:
+  schemas:
+    Response:
+      type: object
+    SingleResponse:
+      allOf:
+      - $ref: Response
+        required:
+          - data
+        properties:
+          data:
+            type: object
+    CollectionResponse:
+      allOf:
+      - $ref: Response
+        required:
+          - data
+          - total
+        properties:
+          data:
+            type: array
+            items: object
+          total:
+            type: integer
+            format: int32
