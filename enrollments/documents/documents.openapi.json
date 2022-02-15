@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Document OpenAPI",
+    "version": "2.0",
+    "description": "Document OpenAPI",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Document"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v2"
+    }
+  ],
+  "security": [
+    {
+      "jwtAuth": []
+    }
+  ],
+  "paths": {
+    "/documents": {
+      "post": {
+        "operationId": "post-document",
+        "summary": "Upload a document",
+        "description": "Document upload",
+        "tags": [
+          "Documents"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Cookie"
+          },
+          {
+            "$ref": "#/components/parameters/Set-Cookie"
+          },
+          {
+            "$ref": "#/components/parameters/X-CBH-CORRELATION-ID"
+          }
+        ],
+        "requestBody":{
+          "description": "Data needed to update a profile",
+          "required": true,
+          "content": {
+            "multipart/form-data":{
+              "schema": {
+                "$ref": "document.vo.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document uploaded",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication and authorization."
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Internal server error response",
+        "content": {
+          "application/json": {
+            "schema": {
+            },
+            "examples": {
+              "example-1": {
+                "value":{
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid Credential, Credential not found",
+        "content": {
+          "application/json": {
+            "schema": {
+            },
+            "examples": {
+              "example-1": {
+                 "value":{
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Cookie": {
+        "name": "Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=.*"
+        },
+        "description": "Cookie (JWT)"
+      },
+      "Set-Cookie": {
+        "name": "Set-Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$; SameSite=Strict; Secure; HttpOnly"
+        },
+        "description": "Cookie (JWT)"
+      },
+      "X-CBH-CORRELATION-ID": {
+        "name": "X-CBH-CORRELATION-ID",
+        "in": "header",
+        "required": true,
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "description": "Request correlation identifier"
+      }
+    }
+  }
+}

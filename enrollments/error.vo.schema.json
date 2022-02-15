@@ -1,0 +1,10 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ErrorEnum",
+  "description": "Error Codes schema",
+  "type": "string",
+  "enum": [
+    "INTERNAL_SERVER_ERROR",
+    "UNAUTHORIZED"
+  ]
+}

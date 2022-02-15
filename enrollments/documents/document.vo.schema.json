@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Document",
+  "description": "Document schema",
+  "type": "object",
+  "properties": {
+    "file": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "document_category": {
+      "type": "string",
+      "enum": [
+        "document_front_side",
+        "document_back_side",
+        "facepicture",
+        "passportpicture",
+        "agreement_pdf"
+      ]
+    }
+  },
+  "required": [
+    "file",
+    "document_category"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Health",
+  "description": "Health-check Health schema",
+  "type": "object",
+  "properties": {
+    "status": {
+      "$ref": "status.vo.schema.json"
+    },
+    "checks": {
+      "$ref": "checks.vo.schema.json"
+    },
+    "links": {
+      "$ref": "links.vo.schema.json"
+    }
+  },
+  "required": [
+    "status"
+  ],
+  "additionalProperties": false
+}

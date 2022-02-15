@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Links",
+  "description": "Health-check Links schema",
+  "type": "object",
+  "additionalProperties": {
+    "oneOf": [
+      {
+        "type": "string",
+        "format": "uri"
+      },
+      {
+        "type": "string",
+        "format": "uri-reference"
+      },
+      {
+        "type": "string",
+        "format": "uri-template"
+      }
+    ]
+  }
+}

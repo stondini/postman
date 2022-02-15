@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "JWTokenPayload",
+  "description": "JSON Web Token Payload schema",
+  "type": "object",
+  "properties": {
+    "enrollmentId": {
+      "$ref": "../enrollments/enrollmentId.vo.schema.json"
+    },
+    "accessToken": {
+      "$ref": "accessToken.vo.schema.json"
+    }
+  },
+  "required": [
+    "enrollmentId",
+    "accessToken"
+  ],
+  "additionalProperties": true
+}

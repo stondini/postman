@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NewJWTRequest",
+  "description": "New JWT Request schema",
+  "type": "object",
+  "properties": {
+    "installationId": {
+      "$ref": "installationId.vo.schema.json"
+    },
+    "passcode": {
+      "$ref": "base64Value.vo.schema.json"
+    },
+    "secret": {
+      "$ref": "base64Value.vo.schema.json"
+    }
+  },
+  "required": [
+    "installationId",
+    "passcode",
+    "secret"
+  ],
+  "additionalProperties": false
+}

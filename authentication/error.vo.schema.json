@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ErrorEnum",
+  "description": "Error Codes schema",
+  "type": "string",
+  "enum": [
+    "INTERNAL_SERVER_ERROR",
+    "AUTH_INVALID_ACCESS_TOKEN",
+    "AUTH_INVALID_REFRESH_TOKEN",
+    "AUTH_INVALID_SECRET",
+    "AUTH_SESSION_NOT_FOUND"
+  ]
+}

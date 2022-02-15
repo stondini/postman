@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileOptions",
+  "description": "Profile Options schema",
+  "type": "object",
+  "properties": {
+    "usTaxPayer": {
+      "type": "boolean"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

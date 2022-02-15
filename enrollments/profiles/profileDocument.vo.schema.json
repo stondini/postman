@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileDocument",
+  "description": "Profile Document schema",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string"
+    },
+    "category": {
+      "type": "string"
+    },
+    "number": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "expiryDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "issueDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "birthDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "birthPlace": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "gender": {
+      "type": "string"
+    },
+    "mrzIssuer": {
+      "type": "string"
+    },
+    "mrzFirstName": {
+      "type": "string"
+    },
+    "mrzLastName": {
+      "type": "string"
+    },
+    "mrzBirthDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "similarity": {
+      "type": "number"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

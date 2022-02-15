@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Authentication Messages Schema",
+  "description": "Authentication Messages Schema",
+  "additionalProperties": false,
+  "anyOf": [
+    {
+      "$ref": "#/$defs/DummyMessage1"
+    },
+    {
+      "$ref": "#/$defs/DummyMessage2"
+    }
+  ],
+  "$defs": {
+    "DummyMessage1": {
+      "type": "object",
+      "properties": {
+        "correlationId": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "installationId": {
+          "$ref": "installationId.vo.schema.json"
+        },
+        "jwt": {
+          "$ref": "jwt.vo.schema.json"
+        }
+      },
+      "required": [
+        "correlationId",
+        "installationId",
+        "jwt"
+      ],
+      "additionalProperties": false
+    },
+    "DummyMessage2": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "installationId": {
+          "$ref": "installationId.vo.schema.json"
+        },
+        "jwt": {
+          "$ref": "jwt.vo.schema.json"
+        }
+      },
+      "required": [
+        "id",
+        "installationId",
+        "jwt"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

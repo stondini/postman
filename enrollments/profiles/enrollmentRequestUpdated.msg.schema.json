@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EnrollmentRequestUpdated",
+  "description": "Update Enrollment Request Messages Schema",
+  "type": "object",
+  "properties": {
+    "subject": {
+      "type": "string",
+      "enum": [
+        "EnrollmentRequestUpdated"
+      ]
+    },
+    "groupId": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "enrollment": {
+          "$ref": "../enrollment.vo.schema.json"
+        },
+        "request": {
+          "properties": {
+            "person": {
+              "type": "object",
+              "allOf": [
+                {
+                  "$ref": "profilePerson.vo.schema.json"
+                },
+                {
+                  "properties": {
+                    "phoneNumber": {
+                      "$ref": "../../common/phoneNumberE164.vo.schema.json"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              ]
+            },
+            "address": {
+              "$ref": "profileAddress.vo.schema.json"
+            },
+            "document": {
+              "$ref": "profileDocument.vo.schema.json"
+            },
+            "options": {
+              "$ref": "profileOptions.vo.schema.json"
+            },
+            "attachments": {
+              "$ref": "profileAttachments.vo.schema.json"
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "enrollment",
+        "request"
+      ]
+    }
+  },
+  "required": [
+    "subject",
+    "groupId",
+    "payload"
+  ],
+  "additionalProperties": false
+}

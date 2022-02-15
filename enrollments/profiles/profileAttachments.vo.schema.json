@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileAttachments",
+  "description": "Profile Attachments schema",
+  "type": "object",
+  "properties": {
+    "passportpicture": {
+      "type": "string"
+    },
+    "facepicture": {
+      "type": "string"
+    },
+    "document_front_side": {
+      "type": "string"
+    },
+    "document_back_side": {
+      "type": "string"
+    },
+    "agreement_pdf": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "passportpicture",
+    "facepicture",
+    "document_front_side",
+    "agreement_pdf"
+  ],
+  "additionalProperties": false
+}

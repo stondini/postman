@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfileAddress",
+  "description": "Profile Address schema",
+  "type": "object",
+  "properties": {
+    "addressLines": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "postalCode": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

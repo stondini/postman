@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NewAccessTokenResponse",
+  "description": "Authentication Access Token Response schema",
+  "type": "object",
+  "properties": {
+    "jwt": {
+      "$ref": "jwt.vo.schema.json"
+    }
+  },
+  "required": [
+    "jwt"
+  ],
+  "additionalProperties": false
+}

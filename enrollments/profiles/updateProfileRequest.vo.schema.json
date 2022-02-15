@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "UpdateProfileRequest",
+  "description": "Update Profile Request schema",
+  "type": "object",
+  "properties": {
+    "person": {
+      "$ref": "profilePerson.vo.schema.json"
+    },
+    "address": {
+      "$ref": "profileAddress.vo.schema.json"
+    },
+    "document": {
+      "$ref": "profileDocument.vo.schema.json"
+    },
+    "options": {
+      "$ref": "profileOptions.vo.schema.json"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}

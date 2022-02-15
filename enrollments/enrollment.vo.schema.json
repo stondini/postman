@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "enrollments",
+  "description": "Enrollments schema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "$ref": "enrollmentId.vo.schema.json"
+    },
+    "credential": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "oneOf": [
+            {
+              "$ref": "../authentication/credential/credential.vo.schema.json"
+            },
+            {
+              "$ref": "../authentication/credential/phone.vo.schema.json"
+            }
+          ]
+        }
+      ]
+    },
+    "installationId": {
+      "$ref": "../authentication/installationId.vo.schema.json"
+    },
+    "status": {
+      "type": "string"
+    },
+    "app": {
+      "type": "string"
+    },
+    "phoneNumber": {
+      "$ref": "../common/phoneNumberE164.vo.schema.json"
+    },
+    "email": {
+      "$ref": "../common/emailAddress.vo.schema.json"
+    },
+    "pin": {
+      "type": "string"
+    },
+    "firebaseToken": {
+      "type": "string"
+    },
+    "refreshedAt": {
+      "type": "string"
+    },
+    "lastActiveAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "installationId",
+    "status",
+    "app"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Status",
+  "description": "Health-check Status Schema",
+  "type": "string",
+  "enum": [
+    "pass",
+    "warn",
+    "fail"
+  ]
+}

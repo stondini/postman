@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "NewAccessTokenRequest",
+  "description": "Authentication Access Token Request schema",
+  "type": "object",
+  "properties": {
+    "installationId": {
+      "$ref": "installationId.vo.schema.json"
+    },
+    "passcode": {
+      "$ref": "base64Value.vo.schema.json"
+    }
+  },
+  "required": [
+    "installationId",
+    "passcode"
+  ],
+  "additionalProperties": false
+}

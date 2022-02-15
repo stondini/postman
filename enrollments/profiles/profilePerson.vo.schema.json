@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ProfilePerson",
+  "description": "Profile Person schema",
+  "type": "object",
+  "properties": {
+    "firstName": {
+      "type": "string"
+    },
+    "lastName": {
+      "type": "string"
+    },
+    "appeal": {
+      "type": "string"
+    },
+    "birthDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "tin": {
+      "type": "string"
+    },
+    "email": {
+      "$ref": "../../common/emailAddress.vo.schema.json"
+    }
+  },
+  "required": [],
+  "additionalProperties": false
+}
