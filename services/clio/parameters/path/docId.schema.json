@@ -1,0 +1,15 @@
+{
+  "name": "docId",
+  "in": "path",
+  "description": "The document ID",
+  "required": true,
+  "schema": {
+    "$ref": "./../../../../domains/archiving/parameters/docId.schema.json"
+  },
+  "examples": {
+    "doc-id-example": {
+      "summary": "Example of a document ID in the URL path",
+      "$ref": "./../../examples/parameters/path/docId.example.schema.json"
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "value": {
+    "errors": [
+      {
+        "id": "Resource not found",
+        "message": "The 'aml' resource was not found"
+      }
+    ]
+  }
+}

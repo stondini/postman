@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Command",
+  "description": "Abstract base command",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./message.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "commandId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "commandId"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "description": "NYX is a module that manages electronic invoices from Ebill",
+    "version": "1.0.0",
+    "title": "NYX - SIX eBill REST API"
+  },
+  "tags": [
+    {
+      "name": "Generate Portal URL",
+      "description": "get portal information to connect to ebill service"
+    },
+    {
+      "name": "registration",
+      "description": "register an user for ebill"
+    },
+    {
+      "name": "terminateSso",
+      "description": "close the sso portal connection"
+    },
+    {
+      "name": "deregister",
+      "description": "deregister an ebill user"
+    },
+    {
+      "name": "HealthCheck",
+      "description": "get ebill health status"
+    }
+  ],
+  "paths": {
+    "/customers/{credential}/portal": {
+      "post": {
+        "tags": [
+          "Generate Portal URL"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "credential",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the user to get"
+          }
+        ],
+        "requestBody": {
+          "description": "user data and portal options",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../domains/ebill/components/privateCustomerPortal.dto.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/portalUrl.dto.schema.json"
+                },
+                "examples": {
+                  "Portal Url and SessionId": {
+                    "value": {
+                      "$ref": "./examples/generate-portal-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/customers/{credential}": {
+      "post": {
+        "tags": [
+          "registration"
+        ],
+        "operationId": "registration",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "credential",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the user to get"
+          }
+        ],
+        "requestBody": {
+          "description": "user data and portal options",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../domains/ebill/components/privateCustomerRegistration.dto.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/ebid.dto.schema.json"
+                },
+                "examples": {
+                  "EBID": {
+                    "value": {
+                      "$ref": "./examples/registration-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "deregister"
+        ],
+        "operationId": "deregister",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "credential",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the user to delete"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/credential.dto.schema.json"
+                },
+                "examples": {
+                  "Deregistered credential": {
+                    "value": {
+                      "$ref": "./examples/deregistered-credential-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/customers/{credential}/portal/{sessionId}": {
+      "delete": {
+        "tags": [
+          "terminateSso"
+        ],
+        "operationId": "terminateSso",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "credential",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the user to delete"
+          },
+          {
+            "in": "path",
+            "name": "sessionId",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ID of the session to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/ssoSession.dto.schema.json"
+                },
+                "examples": {
+                  "response Ok credential and sessionId": {
+                    "value": {
+                      "$ref": "./examples/terminate-sso-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/customers/health": {
+      "get": {
+        "tags": [
+          "HealthCheck"
+        ],
+        "operationId": "health",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/health.dto.schema.json"
+                },
+                "examples": {
+                  "Healthcheck OK": {
+                    "value": {
+                      "$ref": "./examples/health-examples/healthcheck-ok-example.schema.json"
+                    }
+                  },
+                  "Healthcheck ebill maintenance later": {
+                    "value": {
+                      "$ref": "./examples/health-examples/ebill-maintenance-later-example.schema.json"
+                    }
+                  },
+                  "Healthcheck ebill maintenance now": {
+                    "value": {
+                      "$ref": "./examples/health-examples/ebill-maintenance-now-example.schema.json"
+                    }
+                  },
+                  "Healthcheck fail": {
+                    "value": {
+                      "$ref": "./examples/health-examples/healthcheck-fail-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

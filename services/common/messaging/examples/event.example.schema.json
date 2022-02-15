@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExampleEvent",
+  "description": "Example event",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "../event.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "enum": ["PaymentOrderCreated"]
+        },
+        "orderId": {
+          "type": "string"
+        },
+        "rootId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "subject",
+        "orderId",
+        "rootId",
+        "amount"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

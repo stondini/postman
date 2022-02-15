@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Event",
+  "description": "Abstract base event",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "./message.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "eventId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "eventId"
+      ]
+    }
+  ]
+}

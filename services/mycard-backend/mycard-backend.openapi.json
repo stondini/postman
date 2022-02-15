@@ -1,0 +1,252 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "MyCard Backend",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/v2/cards/{cardIdentifier}/balance": {
+      "get": {
+        "description": "Get the balance a Card from its identifier",
+        "tags": [
+          "REST"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cardIdentifier",
+            "schema": {
+              "$ref": "#/components/schemas/cardIdentifier"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/balance"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The reason of the error",
+                  "example": "I am Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/cards/activate": {
+      "post": {
+        "description": "Activate a Card from its identifier",
+        "tags": [
+          "RPC"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cardIdentifier": {
+                    "$ref": "#/components/schemas/cardIdentifier"
+                  }
+                },
+                "required": [
+                  "cardIdentifier"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The reason of the error",
+                  "example": "I am Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/cards/block": {
+      "post": {
+        "description": "Block a Card from its identifier",
+        "tags": [
+          "RPC"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cardIdentifier": {
+                    "$ref": "#/components/schemas/cardIdentifier"
+                  }
+                },
+                "required": [
+                  "cardIdentifier"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The reason of the error",
+                  "example": "I am Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/cards/deactivate": {
+      "post": {
+        "description": "Deactivate a Card from its identifier",
+        "tags": [
+          "RPC"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cardIdentifier": {
+                    "$ref": "#/components/schemas/cardIdentifier"
+                  }
+                },
+                "required": [
+                  "cardIdentifier"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The reason of the error",
+                  "example": "I am Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/cards/get-pin-code": {
+      "post": {
+        "description": "Get the PIN Code of a Card",
+        "summary": "Get the PIN Code of a Card from an identifier, encrypted with a public PKCS #1 key",
+        "tags": [
+          "RPC"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cardIdentifier": {
+                    "$ref": "#/components/schemas/cardIdentifier"
+                  },
+                  "publicKey": {
+                    "$ref": "#/components/schemas/publicKey"
+                  }
+                },
+                "required": [
+                  "cardIdentifier",
+                  "publicKey"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The PIN Code of the Card encrypted with the passed publicKey and encoded in Base64, or null is the Card does not exist",
+                  "nullable": true
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Failure",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string",
+                  "description": "The reason of the error",
+                  "example": "I am Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "balance": {
+        "$ref": "../../domains/card/components/balance.schema.json"
+      },
+      "cardIdentifier": {
+        "$ref": "../../domains/card/components/card-identifier.schema.json"
+      },
+      "publicKey": {
+        "title": "Public Key",
+        "type": "string",
+        "description": "The Base64 representation of a PKCS #1 public key"
+      }
+    }
+  }
+}

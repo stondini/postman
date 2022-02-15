@@ -1,0 +1,363 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Authentication OpenAPI",
+    "version": "1.0",
+    "description": "Authentication OpenAPI",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "authentication"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v2"
+    }
+  ],
+  "security": [
+    {
+      "jwtAuth": []
+    }
+  ],
+  "paths": {
+    "/authentication/access-token": {
+      "get": {
+        "operationId": "put-authentication-access-token",
+        "summary": "Verifies the access token (AT) which is in JWT.",
+        "description": "Verifies the access token (AT) which is in JWT.",
+        "tags": [
+          "authentication"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Set-Cookie"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Access token (AT) is valid.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/success"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/InvalidJWT"
+          },
+          "403": {
+            "$ref": "#/components/responses/InvalidAccessToken"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      },
+      "post": {
+        "operationId": "post-authentication-access-token",
+        "summary": "Creates a new access token (AT) and returns it in a JWT.",
+        "description": "Creates a new access token (AT) and returns it in a JWT.",
+        "tags": [
+          "authentication"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Cookie"
+          },
+          {
+            "$ref": "#/components/parameters/Set-Cookie"
+          }
+        ],
+        "requestBody": {
+          "description": "Data needed to create a new access token (AT)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./../../domains/authentication/newAccessTokenRequest.vo.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A new JWT containing a new access token (AT) and the current enrollment identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./../../domains/authentication/newAccessTokenResponse.vo.schema.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/InvalidJWT"
+          },
+          "404": {
+            "$ref": "#/components/responses/AuthSessionNotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/authentication/secret": {
+      "post": {
+        "operationId": "post-authentication-secret",
+        "summary": "Creates and sends a new secret (OTP) in order to generate a new JWT.",
+        "description": "Creates and sends a new secret (OTP) in order to generate a new JWT.",
+        "tags": [
+          "authentication"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Cookie"
+          }
+        ],
+        "requestBody": {
+          "description": "Data needed to create a new secret",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./../../domains/authentication/newSecretRequest.vo.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A result containing the request identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./../../domains/authentication/newSecretResponse.vo.schema.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/InvalidJWT"
+          },
+          "404": {
+            "$ref": "#/components/responses/AuthSessionNotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    },
+    "/authentication/token": {
+      "post": {
+        "operationId": "post-authentication-transport-token",
+        "summary": "Creates a new JWT containing the old/last access token (AT).",
+        "description": "Creates a new JWT containing the old/last access token (AT).",
+        "tags": [
+          "authentication"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Cookie"
+          },
+          {
+            "$ref": "#/components/parameters/Set-Cookie"
+          }
+        ],
+        "requestBody": {
+          "description": "Data needed to create a new transport token (JWT)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./../../domains/authentication/newJWTRequest.vo.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A new JWT containing the old/last access token (AT).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./../../domains/authentication/newJWTResponse.vo.schema.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/InvalidJWT"
+          },
+          "404": {
+            "$ref": "#/components/responses/AuthSessionNotFound"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "none": {
+        "type": "http",
+        "scheme": ""
+      },
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication and authorization."
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Internal server error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/failure"
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "errors": [
+                    {
+                      "id": "1",
+                      "links": {},
+                      "status": "500",
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "title": "Internal Server Error",
+                      "detail": "Stacktrace",
+                      "source": {},
+                      "meta": {}
+                    }
+                  ],
+                  "meta": {},
+                  "jsonapi": {
+                    "version": "",
+                    "meta": {}
+                  },
+                  "links": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "InvalidJWT": {
+        "description": "401 - Invalid token",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "additionalProperties": false
+            },
+            "examples": {
+              "example-1": {
+                "value": {}
+              }
+            }
+          }
+        }
+      },
+      "InvalidAccessToken": {
+        "description": "Forbidden - Access token (AT) is stale.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/failure"
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "errors": [
+                    {
+                      "id": "1",
+                      "links": {},
+                      "status": "403",
+                      "code": "AUTH_INVALID_ACCESS_TOKEN",
+                      "title": "Authentication session not found",
+                      "detail": "",
+                      "source": {},
+                      "meta": {}
+                    }
+                  ],
+                  "meta": {},
+                  "jsonapi": {
+                    "version": "",
+                    "meta": {}
+                  },
+                  "links": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "AuthSessionNotFound": {
+        "description": "Not Found - Auth session not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/failure"
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "errors": [
+                    {
+                      "id": "1",
+                      "links": {},
+                      "status": "404",
+                      "code": "AUTH_SESSION_NOT_FOUND",
+                      "title": "Authentication session not found",
+                      "detail": "",
+                      "source": {},
+                      "meta": {}
+                    }
+                  ],
+                  "meta": {},
+                  "jsonapi": {
+                    "version": "",
+                    "meta": {}
+                  },
+                  "links": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Cookie": {
+        "name": "Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=.*"
+        },
+        "description": "Cookie (JWT)"
+      },
+      "Set-Cookie": {
+        "name": "Set-Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$; SameSite=Strict; Secure; HttpOnly"
+        },
+        "description": "Cookie (JWT)"
+      }
+    }
+  }
+}

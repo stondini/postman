@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ExampleCommand",
+  "description": "Example command",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "../command.schema.json"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "subject": {
+          "enum": ["CreatePaymentOrderCommand"]
+        },
+        "rootId": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "subject",
+        "rootId",
+        "amount"
+      ],
+      "additionalProperties": false
+    }
+  ]
+}

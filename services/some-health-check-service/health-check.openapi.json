@@ -1,0 +1,68 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Health-check OpenAPI",
+    "version": "1.0",
+    "description": "Health-check OpenAPI",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "health-check"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "get-health",
+        "summary": "Gives the application health-checks.",
+        "description": "Gives the application health-checks.",
+        "tags": [
+          "health-check"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./../../domains/health-check/health.vo.schema.json"
+                },
+                "examples": {
+                  "Health-check OK": {
+                    "value": {
+                      "$ref": "./examples/healthCheckOk.example.schema.json"
+                    }
+                  },
+                  "Health-check maintenance later": {
+                    "value": {
+                      "$ref": "./examples/healthCheckMaintenanceLater.example.schema.json"
+                    }
+                  },
+                  "Health-check maintenance now": {
+                    "value": {
+                      "$ref": "./examples/healthCheckMaintenanceNow.example.schema.json"
+                    }
+                  },
+                  "Health-check fail": {
+                    "value": {
+                      "$ref": "./examples/healthCheckFail.example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  }
+}

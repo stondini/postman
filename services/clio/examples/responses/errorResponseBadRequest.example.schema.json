@@ -1,0 +1,10 @@
+{
+  "value": {
+    "errors": [
+      {
+        "id": "Validation failure",
+        "message": "Invalid PDF structure"
+      }
+    ]
+  }
+}

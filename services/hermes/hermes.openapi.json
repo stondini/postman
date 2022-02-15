@@ -1,0 +1,353 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0.0",
+    "title": "Hermes - BFF on Electronic invoices handling"
+  },
+  "tags": [
+    {
+      "name": "healthcheck",
+      "description": "get system health status"
+    },
+    {
+      "name": "status",
+      "description": "retrieve if the user is already registered and healthchecks data"
+    },
+    {
+      "name": "gtc",
+      "description": "get general terms of condition document"
+    },
+    {
+      "name": "register",
+      "description": "register an user for ebill"
+    },
+    {
+      "name": "accounts",
+      "description": "get all accounts eligible for ebill"
+    },
+    {
+      "name": "portal connection",
+      "description": "get portal information to connect to ebill service"
+    },
+    {
+      "name": "close connection",
+      "description": "close the sso portal connection"
+    },
+    {
+      "name": "deregister",
+      "description": "deregister an ebill user"
+    }
+  ],
+  "paths": {
+    "/client/electronic-invoices/health": {
+      "get": {
+        "tags": [
+          "healthcheck"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/health.dto.schema.json"
+                },
+                "examples": {
+                  "Healthcheck OK": {
+                    "value": {
+                      "$ref": "./examples/health-examples/healthcheck-ok-example.schema.json"
+                    }
+                  },
+                  "Healthcheck ebill maintenance later": {
+                    "value": {
+                      "$ref": "./examples/health-examples/ebill-maintenance-later-example.schema.json"
+                    }
+                  },
+                  "Healthcheck ebill maintenance now": {
+                    "value": {
+                      "$ref": "./examples/health-examples/ebill-maintenance-now-example.schema.json"
+                    }
+                  },
+                  "Healthcheck fail": {
+                    "value": {
+                      "$ref": "./examples/health-examples/healthcheck-fail-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/client/electronic-invoices/status": {
+      "get": {
+        "tags": [
+          "status"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/ebillStatus.dto.schema.json"
+                },
+                "examples": {
+                  "Healthcheck OK, user not registered": {
+                    "value": {
+                      "$ref": "./examples/ebill-status-examples/healthcheck-ok-user-not-registered-example.schema.json"
+                    }
+                  },
+                  "Ebill maintenance later, user registered": {
+                    "value": {
+                      "$ref": "./examples/ebill-status-examples/ebill-maintenance-later-user-registered-example.schema.json"
+                    }
+                  },
+                  "Ebill maintenance now, user registered": {
+                    "value": {
+                      "$ref": "./examples/ebill-status-examples/ebill-maintenance-now-user-registered-example.schema.json"
+                    }
+                  },
+                  "healthcheck fail, user registered": {
+                    "value": {
+                      "$ref": "./examples/ebill-status-examples/healthcheck-fail-user-registered-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/client/electronic-invoices/accounts": {
+      "get": {
+        "tags": [
+          "accounts"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/eligibleAccounts.dto.schema.json"
+                },
+                "example": {
+                  "$ref": "./examples/eligible-accounts-example.schema.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/client/electronic-invoices/gtc": {
+      "get": {
+        "tags": [
+          "gtc"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "accept-language",
+            "description": "language of the gtc"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/gtc.dto.schema.json"
+                },
+                "example": {
+                  "$ref": "./examples/gtc-example.schema.json"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/client/electronic-invoices/register": {
+      "post": {
+        "tags": [
+          "register"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "accept-language",
+            "description": "language for the portal"
+          }
+        ],
+        "requestBody": {
+          "description": "account numbers of selected account for ebill",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "../../domains/ebill/components/registrationInfo.dto.schema.json"
+              },
+              "example": {
+                "$ref": "./examples/account-ids-example.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/portalInfo.dto.schema.json"
+                },
+                "examples": {
+                  "portalInfo": {
+                    "value": {
+                      "$ref": "./examples/portal-info-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "deregister"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    },
+    "/client/electronic-invoices/portal": {
+      "get": {
+        "tags": [
+          "portal connection"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "header",
+            "name": "accept-language",
+            "description": "language for the portal"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "../../domains/ebill/components/portalInfo.dto.schema.json"
+                },
+                "examples": {
+                  "portalInfo": {
+                    "value": {
+                      "$ref": "./examples/portal-info-example.schema.json"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "close connection"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components":{
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  }
+}

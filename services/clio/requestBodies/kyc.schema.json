@@ -1,0 +1,23 @@
+{
+  "description": "Kyc multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "docDate": {
+          "$ref": "./../parameters/query/criteria.schema.json#/docDate"
+        },
+        "personKey": {
+          "$ref": "./../parameters/query/criteria.schema.json#/personKey"
+        }
+      }
+    }
+  }
+}

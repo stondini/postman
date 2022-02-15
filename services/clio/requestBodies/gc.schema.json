@@ -1,0 +1,26 @@
+{
+  "description": "General conditional multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "credential": {
+          "$ref": "./../parameters/query/criteria.schema.json#/credential"
+        },
+        "personKey": {
+          "$ref": "./../parameters/query/criteria.schema.json#/personKey"
+        },
+        "docDate": {
+          "$ref": "./../parameters/query/criteria.schema.json#/docDate"
+        }
+      }
+    }
+  }
+}

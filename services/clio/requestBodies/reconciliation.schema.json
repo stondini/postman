@@ -1,0 +1,23 @@
+{
+  "description": "Reconciliation multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "$ref": "./../parameters/query/criteria.schema.json#/date"
+        },
+        "currency": {
+          "$ref": "./../parameters/query/criteria.schema.json#/currency"
+        }
+      }
+    }
+  }
+}

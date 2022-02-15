@@ -1,0 +1,184 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Enrollments OpenAPI",
+    "version": "2.0",
+    "description": "Enrollments OpenAPI",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "enrollments"
+    }
+  ],
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v2"
+    }
+  ],
+  "security": [
+    {
+      "jwtAuth": []
+    }
+  ],
+  "paths": {
+    "/enrollments": {
+      "post": {
+        "operationId": "post-enrollment",
+        "summary": "Creates a new enrollment and returns an authentication JWT.",
+        "description": "Creates a new enrollment and returns an authentication JWT.",
+        "tags": [
+          "enrollments"
+        ],
+        "security": [
+          {
+            "none": []
+          }
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Cookie"
+          },
+          {
+            "$ref": "#/components/parameters/Set-Cookie"
+          }
+        ],
+        "requestBody": {
+          "description": "Data needed to create a new access token (AT)",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "./../../domains/enrollments/newEnrollmentRequest.vo.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "A new JWT containing a new access token (AT) and the enrollment identifier.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "./../../domains/enrollments/newEnrollmentResponse.vo.schema.json"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "default": {
+            "$ref": "#/components/responses/InternalServerError"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "none": {
+        "type": "http",
+        "scheme": ""
+      },
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication and authorization."
+      }
+    },
+    "responses": {
+      "InternalServerError": {
+        "description": "Internal server error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/failure"
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "errors": [
+                    {
+                      "id": "1",
+                      "links": {},
+                      "status": "500",
+                      "code": "INTERNAL_SERVER_ERROR",
+                      "title": "Internal Server Error",
+                      "detail": "Stacktrace",
+                      "source": {},
+                      "meta": {}
+                    }
+                  ],
+                  "meta": {},
+                  "jsonapi": {
+                    "version": "",
+                    "meta": {}
+                  },
+                  "links": {}
+                }
+              }
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "Unauthorized - Invalid Credential, Credential not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/common/json-api/jsonapiSpec.schema.json#/definitions/failure"
+            },
+            "examples": {
+              "example-1": {
+                "value": {
+                  "errors": [
+                    {
+                      "id": "1",
+                      "links": {},
+                      "status": "401",
+                      "code": "UNAUTHORIZED",
+                      "title": "Unauthorized",
+                      "detail": "Stacktrace",
+                      "source": {},
+                      "meta": {}
+                    }
+                  ],
+                  "meta": {},
+                  "jsonapi": {
+                    "version": "",
+                    "meta": {}
+                  },
+                  "links": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "Cookie": {
+        "name": "Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=.*"
+        },
+        "description": "Cookie (JWT)"
+      },
+      "Set-Cookie": {
+        "name": "Set-Cookie",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "pattern": "jwt=^[A-Za-z0-9-_=]+\\.[A-Za-z0-9-_=]+\\.?[A-Za-z0-9-_.+/=]*$; SameSite=Strict; Secure; HttpOnly"
+        },
+        "description": "Cookie (JWT)"
+      }
+    }
+  }
+}

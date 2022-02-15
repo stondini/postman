@@ -1,0 +1,20 @@
+{
+  "description": "Card multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "cardToken": {
+          "$ref": "./../parameters/query/criteria.schema.json#/cardToken"
+        }
+      }
+    }
+  }
+}

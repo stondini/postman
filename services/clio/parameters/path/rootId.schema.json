@@ -1,0 +1,15 @@
+{
+  "name": "rootId",
+  "in": "path",
+  "description": "The clients root ID",
+  "required": true,
+  "schema": {
+    "type": "string"
+  },
+  "examples": {
+    "root-id-example": {
+      "summary": "Example of a root ID in the URL path",
+      "$ref": "./../../examples/parameters/path/rootId.example.schema.json"
+    }
+  }
+}

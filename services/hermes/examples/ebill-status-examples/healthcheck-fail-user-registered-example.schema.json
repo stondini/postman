@@ -1,0 +1,6 @@
+{
+  "registered": true,
+  "healthcheck": {
+    "status": "fail"
+  }
+}

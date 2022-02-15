@@ -1,0 +1,29 @@
+{
+  "cardToken": {
+    "type": "string"
+  },
+  "credential": {
+    "type": "string"
+  },
+  "currency": {
+    "type": "string"
+  },
+  "date": {
+    "type": "string"
+  },
+  "docDate": {
+    "type": "string"
+  },
+  "enrollment": {
+    "type": "string"
+  },
+  "paymentReference": {
+    "type": "string"
+  },
+  "personKey": {
+    "type": "string"
+  },
+  "statementDate": {
+    "type": "string"
+  }
+}

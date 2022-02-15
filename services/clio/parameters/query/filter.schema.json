@@ -1,0 +1,65 @@
+{
+  "name": "filter",
+  "in": "query",
+  "description": "A filter object parameter in a query",
+  "required": true,
+  "schema": {
+    "type": "string",
+    "description": "Query filter logic",
+    "pattern": "\\bfilter\\[.*\\]\\[(eq|gt|gte|lt|lte|like|neq|ngt|nlt|nlike|in\\]\\[|nin\\]\\[)\\]\\=\\b"
+  },
+  "examples": {
+    "filter-equals-example": {
+      "summary": "Example of a filter search using the 'equals' operator",
+      "$ref": "./../../examples/parameters/query/filterEq.example.schema.json"
+    },
+    "filter-not-equals-example": {
+      "summary": "Example of a filter search using the 'not equals' operator",
+      "$ref": "./../../examples/parameters/query/filterNeq.example.schema.json"
+    },
+    "filter-greater-than-example": {
+      "summary": "Example of a filter search using the 'greater than' operator",
+      "$ref": "./../../examples/parameters/query/filterGt.example.schema.json"
+    },
+    "filter-not-greater-than-example": {
+      "summary": "Example of a filter search using the 'not greater than' operator",
+      "$ref": "./../../examples/parameters/query/filterNgt.example.schema.json"
+    },
+    "filter-greater-than-or-equal-to-example": {
+      "summary": "Example of a filter search using the 'greater than or equal to' operator",
+      "$ref": "./../../examples/parameters/query/filterGte.example.schema.json"
+    },
+    "filter-less-than-example": {
+      "summary": "Example of a filter search using the 'less than' operator",
+      "$ref": "./../../examples/parameters/query/filterLt.example.schema.json"
+    },
+    "filter-not-less-than-example": {
+      "summary": "Example of a filter search using the 'not less than' operator",
+      "$ref": "./../../examples/parameters/query/filterNlt.example.schema.json"
+    },
+    "filter-less-than-or-equal-to-example": {
+      "summary": "Example of a filter search using the 'less than or equal to' operator",
+      "$ref": "./../../examples/parameters/query/filterLte.example.schema.json"
+    },
+    "filter-like-example": {
+      "summary": "Example of a filter search using the 'like' operator",
+      "$ref": "./../../examples/parameters/query/filterLike.example.schema.json"
+    },
+    "filter-not-like-example": {
+      "summary": "Example of a filter search using the 'not like' operator",
+      "$ref": "./../../examples/parameters/query/filterNlike.example.schema.json"
+    },
+    "filter-contains-example": {
+      "summary": "Example of a filter search using the 'contains' operator",
+      "$ref": "./../../examples/parameters/query/filterContains.example.schema.json"
+    },
+    "filter-in-example": {
+      "summary": "Example of a filter search using the 'in' operator",
+      "$ref": "./../../examples/parameters/query/filterIn.example.schema.json"
+    },
+    "filter-not-in-example": {
+      "summary": "Example of a filter search using the 'not in' operator",
+      "$ref": "./../../examples/parameters/query/filterNin.example.schema.json"
+    }
+  }
+}

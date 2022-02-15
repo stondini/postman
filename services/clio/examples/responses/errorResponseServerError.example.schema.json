@@ -1,0 +1,10 @@
+{
+  "value": {
+    "errors": [
+      {
+        "id": "UnhandledException",
+        "message": "Internal server error"
+      }
+    ]
+  }
+}

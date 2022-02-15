@@ -1,0 +1,23 @@
+{
+  "description": "Onboarding multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "enrollment": {
+          "$ref": "./../parameters/query/criteria.schema.json#/enrollment"
+        },
+        "credential": {
+          "$ref": "./../parameters/query/criteria.schema.json#/credential"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,1194 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "description": "OpenAPI Schema for the 'Clio' logical access micro-service",
+    "title": "Clio",
+    "version": "1.0.0",
+    "contact": {
+      "name": "D'Arcy RUSH",
+      "url": "https://www.cbhbank.com"
+    }
+  },
+  "servers": [
+    {
+      "description": "Internal CBH server",
+      "url": "TODO"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "responses": {
+      "200-download": {
+        "description": "Successful resource download response",
+        "content": {
+          "image/*": {
+            "schema": {
+              "$ref": "./responses/downloadResponse.schema.json"
+            }
+          },
+          "application/*": {
+            "schema": {
+              "$ref": "./responses/downloadResponse.schema.json"
+            }
+          },
+          "text/*": {
+            "schema": {
+              "$ref": "./responses/downloadResponse.schema.json"
+            }
+          }
+        }
+      },
+      "200-query": {
+        "description": "Successful query response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/queryResponse.schema.json"
+            },
+            "examples": {
+              "query-results-list-example": {
+                "summary": "Example successful response with results from a query searching by root ID",
+                "$ref": "./examples/responses/queryResultsList.example.schema.json"
+              },
+              "query-empty-list-example": {
+                "summary": "Example successful response with no results from a query",
+                "$ref": "./examples/responses/queryEmptyList.example.schema.json"
+              }
+            }
+          }
+        }
+      },
+      "201": {
+        "description": "Successful resource creation response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/uploadResponse.schema.json"
+            },
+            "examples": {
+              "resource-created-example": {
+                "summary": "Example success response explaining the resource was created from a successful upload",
+                "$ref": "./examples/responses/uploadResponse.example.schema.json"
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/errorResponse.schema.json"
+            },
+            "examples": {
+              "bad-request-example": {
+                "summary": "Example error response explaining the uploaded file format is incorrect",
+                "$ref": "./examples/responses/errorResponseBadRequest.example.schema.json"
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/errorResponse.schema.json"
+            },
+            "examples": {
+              "bad-request-example": {
+                "summary": "Example error response explaining the user credentials are not sufficient",
+                "$ref": "./examples/responses/errorResponseForbidden.example.schema.json"
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/errorResponse.schema.json"
+            },
+            "examples": {
+              "url-not-found-example": {
+                "summary": "Example error response when using a URL that doesn't exist",
+                "$ref": "./examples/responses/errorResponseUrlNotFound.example.schema.json"
+              },
+              "resource-not-found-example": {
+                "summary": "Example error response when using a document ID that doesn't exist",
+                "$ref": "./examples/responses/errorResponseResourceNotFound.example.schema.json"
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal server error response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "./../../domains/archiving/responses/errorResponse.schema.json"
+            },
+            "examples": {
+              "server-error-example": {
+                "summary": "Example error response when the server encounters a non recoverable exception",
+                "$ref": "./examples/responses/errorResponseServerError.example.schema.json"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "root-id": {
+        "$ref": "./parameters/path/rootId.schema.json"
+      },
+      "filter": {
+        "$ref": "./parameters/query/filter.schema.json"
+      },
+      "doc-id": {
+        "$ref": "./parameters/path/docId.schema.json"
+      }
+    },
+    "examples": {},
+    "requestBodies": {},
+    "headers": {},
+    "securitySchemes": {
+      "jwtAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication and authorization"
+      }
+    },
+    "links": {},
+    "callbacks": {}
+  },
+  "security": [
+    {
+      "jwtAuth": []
+    }
+  ],
+  "paths": {
+    "/roots/{rootId}/storage/aml": {
+      "description": "Endpoint to upload an AML document or query a list of AML documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of AML documents using filters",
+        "operationId": "queryAml",
+        "tags": [
+          "Aml"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload an AML document",
+        "operationId": "uploadAml",
+        "tags": [
+          "Aml"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/aml.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/office.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/aml/{docId}": {
+      "description": "Endpoint to download an AML document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download an AML document with a given document ID",
+        "operationId": "getAml",
+        "tags": [
+          "Aml"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/card": {
+      "description": "Endpoint to upload a card document or query a list of card documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of card documents using filters",
+        "operationId": "queryCard",
+        "tags": [
+          "Card"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a card document",
+        "operationId": "uploadCard",
+        "tags": [
+          "Card"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/card.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/office.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/card/{docId}": {
+      "description": "Endpoint to download a card document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a card document with a given document ID",
+        "operationId": "getCard",
+        "tags": [
+          "Card"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/chat": {
+      "description": "Endpoint to upload a chat document or query a list of chat documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of chat documents using filters",
+        "operationId": "queryChat",
+        "tags": [
+          "Chat"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a chat document",
+        "operationId": "uploadChat",
+        "tags": [
+          "Chat"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/chat.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/office.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/chat/{docId}": {
+      "description": "Endpoint to download a chat document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a chat document with a given document ID",
+        "operationId": "getChat",
+        "tags": [
+          "Chat"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/gc": {
+      "description": "Endpoint to upload a general conditions document or query a list of general conditions documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of general conditions documents using filters",
+        "operationId": "queryGc",
+        "tags": [
+          "Gc"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a gc document",
+        "operationId": "uploadGc",
+        "tags": [
+          "Gc"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/gc.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/image.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/gc/{docId}": {
+      "description": "Endpoint to download a general conditions document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a general conditions document with a given document ID",
+        "operationId": "getGc",
+        "tags": [
+          "Gc"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/kyc": {
+      "description": "Endpoint to upload a kyc document or query a list of kyc documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of kyc documents using filters",
+        "operationId": "queryKyc",
+        "tags": [
+          "Kyc"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a kyc document",
+        "operationId": "uploadKyc",
+        "tags": [
+          "Kyc"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/kyc.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/office.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/kyc/{docId}": {
+      "description": "Endpoint to download a kyc document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a kyc document with a given document ID",
+        "operationId": "getKyc",
+        "tags": [
+          "Kyc"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/onboarding": {
+      "description": "Endpoint to upload a onboarding document or query a list of onboarding documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of onboarding documents using filters",
+        "operationId": "queryOnboarding",
+        "tags": [
+          "Onboarding"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a onboarding document",
+        "operationId": "uploadOnboarding",
+        "tags": [
+          "Onboarding"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/onboarding.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/image.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/onboarding/{docId}": {
+      "description": "Endpoint to download a onboarding document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a onboarding document with a given document ID",
+        "operationId": "getOnboarding",
+        "tags": [
+          "Onboarding"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/reconciliation": {
+      "description": "Endpoint to upload a reconciliation document or query a list of reconciliation documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of reconciliation documents using filters",
+        "operationId": "queryReconciliation",
+        "tags": [
+          "Reconciliation"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a reconciliation document",
+        "operationId": "uploadReconciliation",
+        "tags": [
+          "Reconciliation"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/reconciliation.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/office.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/reconciliation/{docId}": {
+      "description": "Endpoint to download a reconciliation document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a reconciliation document with a given document ID",
+        "operationId": "getReconciliation",
+        "tags": [
+          "Reconciliation"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/statements-gva": {
+      "description": "Endpoint to upload a statement document or query a list of statement documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of statement documents using filters",
+        "operationId": "queryStatement",
+        "tags": [
+          "Statements"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a statement document",
+        "operationId": "uploadStatement",
+        "tags": [
+          "Statements"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/statementsGva.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/spool.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/statements-gva/{docId}": {
+      "description": "Endpoint to download a statement document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a statement document with a given document ID",
+        "operationId": "getStatement",
+        "tags": [
+          "Statements"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/statements-nas": {
+      "description": "Endpoint to upload a statement document or query a list of statement documents",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        }
+      ],
+      "get": {
+        "description": "Query a list of statement documents using filters",
+        "operationId": "queryStatement",
+        "tags": [
+          "Statements"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filter"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-query"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "post": {
+        "description": "Upload a statement document",
+        "operationId": "uploadStatement",
+        "tags": [
+          "Statements"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "./requestBodies/statementsNas.schema.json"
+              },
+              "examples": {},
+              "encoding": {
+                "$ref": "./encoding/spool.schema.json"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/201"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/roots/{rootId}/storage/statements-nas/{docId}": {
+      "description": "Endpoint to download a statement document with a given document ID",
+      "parameters": [
+        {
+          "$ref": "#/components/parameters/root-id"
+        },
+        {
+          "$ref": "#/components/parameters/doc-id"
+        }
+      ],
+      "get": {
+        "description": "Download a statement document with a given document ID",
+        "operationId": "getStatement",
+        "tags": [
+          "Statements"
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/200-download"
+          },
+          "400": {
+            "$ref": "#/components/responses/400"
+          },
+          "403": {
+            "$ref": "#/components/responses/403"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Aml"
+    },
+    {
+      "name": "Card"
+    },
+    {
+      "name": "Chat"
+    },
+    {
+      "name": "Gc"
+    },
+    {
+      "name": "Kyc"
+    },
+    {
+      "name": "Onboarding"
+    },
+    {
+      "name": "Reconciliation"
+    },
+    {
+      "name": "Statements"
+    }
+  ]
+}

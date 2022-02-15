@@ -1,0 +1,20 @@
+{
+  "description": "Aml multipart form body",
+  "properties": {
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "binary"
+      }
+    },
+    "criteria": {
+      "type": "object",
+      "properties": {
+        "paymentReference": {
+          "$ref": "./../parameters/query/criteria.schema.json#/paymentReference"
+        }
+      }
+    }
+  }
+}

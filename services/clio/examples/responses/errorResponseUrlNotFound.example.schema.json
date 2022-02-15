@@ -1,0 +1,10 @@
+{
+  "value": {
+    "errors": [
+      {
+        "id": "URL not found",
+        "message": "The URL endpoint was not found"
+      }
+    ]
+  }
+}

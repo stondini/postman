@@ -1,0 +1,18 @@
+{
+  "registered": true,
+  "healthcheck": {
+    "status": "fail",
+    "checks": {
+      "ebill:maintenance": [
+        {
+          "observedValue": {
+            "startDate": "2021-10-26T00:00:00",
+            "endDate": "2021-10-26T06:00:00"
+          },
+          "observedUnit": "period",
+          "status": "fail"
+        }
+      ]
+    }
+  }
+}

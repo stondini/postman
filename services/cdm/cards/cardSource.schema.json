@@ -1,0 +1,67 @@
+{
+  "title": "Cards source connector schema",
+  "description": "Schema for Kafka Source Connector for cards",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "root_id": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "card_order_id": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "product_id": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "design_id": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "masked_pan": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "status": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    },
+    "validated_at": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "title": "org.apache.kafka.connect.data.Timestamp",
+          "type": "integer"
+        }
+      ]
+    },
+    "created_at": {
+      "title": "org.apache.kafka.connect.data.Timestamp",
+      "type": "integer"
+    },
+    "updated_at": {
+      "title": "org.apache.kafka.connect.data.Timestamp",
+      "type": "integer"
+    },
+    "expires_at": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "title": "org.apache.kafka.connect.data.Timestamp",
+          "type": "integer"
+        }
+      ]
+    },
+    "sent_to_manufacturer_at": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "title": "org.apache.kafka.connect.data.Timestamp",
+          "type": "integer"
+        }
+      ]
+    },
+    "processor_status": {
+      "oneOf": [{ "type": "null" }, { "type": "string" }]
+    }
+  }
+}

@@ -1,0 +1,23 @@
+[{
+  "account": {
+    "id": "1",
+    "number": "0079930001000036",
+    "iban": "CH8608762000799300004",
+    "amount": "1515505315.27",
+    "currency": "AUD",
+    "denomination": "CURRENT ACCOUNT AUD"
+  },
+  "selected": false
+},
+{
+  "account": {
+    "id": "2",
+    "number": "0079930001000756",
+    "iban": "CH1608762000799300003",
+    "amount": "15155053.27",
+    "currency": "CHF",
+    "denomination": "CURRENT ACCOUNT CHF"
+  },
+  "selected": true
+}]
+
